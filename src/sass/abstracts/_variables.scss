@@ -35,17 +35,6 @@ $theme-styles: (
 			red:    #ff3366
 		)
 	),
-    dz: (
-		fonts: (
-			serif: ('IBM Plex Serif', Georgia, Times, 'Times New Roman', serif),
-			sans-serif: ('IBM Plex Sans','Helvetica Neue', Helvetica, 'Roboto', sans-serif)
-		),
-		colors: (
-			blue:   #0084ff,
-			green:  #00cc88,
-			red:    #ff3366
-		)
-	)
 );
 
 // Monospace font
@@ -55,7 +44,7 @@ $font-family-monospace: SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","
 // Colors
 
 // Primary color for the gray palette
-$color-primary:                        #45515e !default;
+$color-primary:                        #CA517C !default;
 
 // Base
 $color-body-text:                      #2c343c !default;
