@@ -11,22 +11,27 @@ if (!process.env.GOOGLE_SPREADSHEET_ID_FROM_URL) throw new Error('no GOOGLE_SPRE
 const { GoogleSpreadsheet } = require('google-spreadsheet');
 
 exports.handler = async (event, context) => {
-  const doc = new GoogleSpreadsheet(process.env.GOOGLE_SPREADSHEET_ID_FROM_URL);
+  const joinDoc = new GoogleSpreadsheet(process.env.GOOGLE_SPREADSHEET_ID_FROM_URL);
+  const scholarshipDoc = new GoogleSpreadsheet(process.env.SCHOLARSHIP_GOOGLE_SPREADSHEET_ID_FROM_URL);
+  const data = JSON.parse(event.body).payload.data;
+  const form = data["form-name"];
+
+  const doc = (form === "join-form") ? joinDoc : scholarshipDoc;
 
   await doc.useServiceAccountAuth({
       client_email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
       private_key: process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n')
   });
+  
   await doc.loadInfo();
   const sheet = doc.sheetsByIndex[0];
 
   try {
-      const data = JSON.parse(event.body).payload.data;
       const addedRow = await sheet.addRow(data);
       return {
           statusCode: 200,
           body: JSON.stringify({
-              message: `POST Success - added row ${addedRow._rowNumber - 1}`
+              message: `POST Successful submission on ${form} - added row ${addedRow._rowNumber}`
           })
       };
   } catch (err) {
