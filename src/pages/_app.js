@@ -2,7 +2,7 @@
 import { useEffect } from 'react';
 import Router from 'next/router';
 import '../sass/main.scss';
-import { PayPalScriptProvider } from '@paypal/react-paypal-js';
+import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
 
 
 function MyApp({ Component, pageProps }) {
@@ -37,7 +37,7 @@ function MyApp({ Component, pageProps }) {
     }, []);
 
     return (
-        <PayPalScriptProvider deferLoading="true" options={{"client-id": process.env.PAYPAL_CLIENT_ID }}>
+        <PayPalScriptProvider options={{"client-id": "AQB-Evp78boBotKxXEHRznHL626_10LNylGcPP1_VzlJicRdVgEp263YPSKnGzUr5AJEXQoBC8VmDMS_" }}>
             <Component {...pageProps} />
         </PayPalScriptProvider>
     );
