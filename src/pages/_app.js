@@ -2,6 +2,7 @@
 import { useEffect } from 'react';
 import Router from 'next/router';
 import '../sass/main.scss';
+import { PayPalScriptProvider } from '@paypal/react-paypal-js';
 
 
 function MyApp({ Component, pageProps }) {
@@ -35,7 +36,11 @@ function MyApp({ Component, pageProps }) {
         };
     }, []);
 
-    return <Component {...pageProps} />;
+    return (
+        <PayPalScriptProvider deferLoading="true" options={{"client-id": process.env.PAYPAL_CLIENT_ID }}>
+            <Component {...pageProps} />
+        </PayPalScriptProvider>
+    );
 }
 
 // Only uncomment this method if you have blocking data requirements for
