@@ -2,6 +2,7 @@
 import { useEffect } from 'react';
 import Router from 'next/router';
 import '../sass/main.scss';
+import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
 
 
 function MyApp({ Component, pageProps }) {
@@ -35,7 +36,9 @@ function MyApp({ Component, pageProps }) {
         };
     }, []);
 
-    return <Component {...pageProps} />;
+    return (
+        <Component {...pageProps} />
+    );
 }
 
 // Only uncomment this method if you have blocking data requirements for

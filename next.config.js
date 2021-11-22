@@ -29,7 +29,9 @@ module.exports = {
         // Instead, the src/pages/[...slug].js uses the "withRemoteDataUpdates"
         // function to update the content on the page without refreshing the
         // whole page
-        config.plugins.push(new webpack.WatchIgnorePlugin([/\/content\//]));
+        config.plugins.push(new webpack.WatchIgnorePlugin({
+            paths: [/\/content\//]
+        }));
         return config;
     }
 };
