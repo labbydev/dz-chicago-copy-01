@@ -37,9 +37,7 @@ function MyApp({ Component, pageProps }) {
     }, []);
 
     return (
-        <PayPalScriptProvider options={{"client-id": "AQB-Evp78boBotKxXEHRznHL626_10LNylGcPP1_VzlJicRdVgEp263YPSKnGzUr5AJEXQoBC8VmDMS_" }}>
-            <Component {...pageProps} />
-        </PayPalScriptProvider>
+        <Component {...pageProps} />
     );
 }
 

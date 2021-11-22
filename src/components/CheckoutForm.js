@@ -1,46 +1,59 @@
 import { useEffect, useRef, useState } from "react";
-import { PayPalButtons } from "@paypal/react-paypal-js";
+import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
+import { create, xor } from "lodash";
 
 const CheckoutForm = () => {
   const [succeeded, setSucceeded] = useState(false);
   const [paypalErrorMessage, setPaypalErrorMessage] = useState("");
-  const [orderID, setOrderID] = useState(false);
+  const [orderID, setOrderID] = useState(0);
   const [billingDetails, setBillingDetails] = useState("");
   const orderDescription = 'DZ Chicago 2021 Dues';
-  // const itemOptions = useRef();
-  // const selectedItemDescription = itemOptions.options[itemOptions.selectedIndex].value;
-  // const selectedItemPrice = parseFloat(itemOptions.options[itemOptions.selectedIndex].getAttribute("price"));
-  // const tax = (0 === 0 || false) ? 0 : (selectedItemPrice * (parseFloat(0)/100));
-  // const priceTotal = selectedItemPrice + tax;
-  // const itemTotalValue = Math.round((selectedItemPrice * 100) / 100);
+
+  const availableOptions = [
+    {
+      title: "Turtle",
+      price: 40.00
+    },
+    {
+      title: "Rose",
+      price: 70.00
+    },
+    {
+      title: "Diamond",
+      price: 150.00
+    }
+  ];
+
+  const [itemOptions, setItemOptions] = useState(availableOptions[0]);
 
   const createOrder = (data, actions) => {
-    return actions.order.create({
+
+    const price = parseFloat(itemOptions.price).toString();
+    const description = itemOptions.title;
+
+    console.log(itemOptions);
+
+    const request = {
       purchase_units: [{
-        description: 'DZ Chicago Dues',
+        description: orderDescription,
         amount: {
           currency_code: 'USD',
-          value: '100',
-          breakdown: {
-            item_total: {
-              currency_code: 'USD',
-              value: '100'
-            },
-            tax_total: {
-              currency_code: 'USD',
-              value: tax,
-            }
-          }
+          value: price
+        }
+      }],
+      items: [{
+        name: description,
+        unit_amount: {
+          currency_code: 'USD',
+          value: price,
         },
-        items: [{
-          name: selectedItemDescription,
-          unit_amount: {
-            currency_code: 'USD',
-            value: selectedItemPrice,
-          }
-        }]
+        quantity: 1
       }]
-    })
+    };
+
+    console.log("REQ: " + JSON.stringify(request));
+
+    return actions.order.create(request)
     .then((orderID) => {
       setOrderID(orderID);
       return orderID;
@@ -59,27 +72,33 @@ const CheckoutForm = () => {
     setPaypalErrorMessage("Something went wrong with your payment")
   };
 
+  const handleChange = (event) => {
+    setItemOptions(availableOptions[event.target.selectedIndex]);
+  }
+  
   return (
    <div id="smart-button-container" className="container text-center items-center justify-center">
      <div className="items-center justify-center py-4">
        <h2>DZ Chicago 2021 Dues</h2>
-       <select id="item-options">
-         <option value="Turtle" price="40">Turtle - $40</option>
-         <option value="Rose" price="70">Rose - $70</option>
-         <option value="Diamond" price="150">Diamond - $150</option>
+       <select id="item-options" onChange={handleChange}>
+         {availableOptions.map((object, i) => <option key={i}>{object.title} - ${object.price}</option>)}
        </select>
      </div>
-     <PayPalButtons
-        style={{
-          color: "white",
-          shape: "rect",
-          layout: "vertical",
-          label: "checkout",
-        }}
-        createOrder={createOrder}
-        onApprove={onApprove}
-        onError={onError}
-      />
+     <PayPalScriptProvider options={{
+            "client-id": "AQB-Evp78boBotKxXEHRznHL626_10LNylGcPP1_VzlJicRdVgEp263YPSKnGzUr5AJEXQoBC8VmDMS_",
+    }}>
+      <PayPalButtons
+          style={{
+            color: "white",
+            shape: "rect",
+            layout: "vertical",
+            label: "checkout",
+          }}
+          createOrder={createOrder}
+          onApprove={onApprove}
+          onError={onError}
+        />
+      </PayPalScriptProvider>
       {paypalErrorMessage && (
         <p className="text-red-600">{paypalErrorMessage}</p>
       )}
