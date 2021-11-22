@@ -1,6 +1,5 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
-import { create, xor } from "lodash";
 
 const CheckoutForm = () => {
   const [succeeded, setSucceeded] = useState(false);
@@ -31,8 +30,6 @@ const CheckoutForm = () => {
     const price = parseFloat(itemOptions.price).toString();
     const description = itemOptions.title;
 
-    console.log(itemOptions);
-
     const request = {
       purchase_units: [{
         description: orderDescription,
@@ -50,8 +47,6 @@ const CheckoutForm = () => {
         quantity: 1
       }]
     };
-
-    console.log("REQ: " + JSON.stringify(request));
 
     return actions.order.create(request)
     .then((orderID) => {
@@ -94,6 +89,7 @@ const CheckoutForm = () => {
             layout: "vertical",
             label: "checkout",
           }}
+          forceReRender={[itemOptions]}
           createOrder={createOrder}
           onApprove={onApprove}
           onError={onError}
