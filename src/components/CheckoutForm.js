@@ -6,7 +6,7 @@ const CheckoutForm = () => {
   const [paypalErrorMessage, setPaypalErrorMessage] = useState("");
   const [orderID, setOrderID] = useState(0);
   const [billingDetails, setBillingDetails] = useState("");
-  const orderDescription = 'DZ Chicago 2021 Dues';
+  const orderDescription = 'DZ Chicago 2022 Dues';
 
   const availableOptions = [
     {
@@ -74,7 +74,7 @@ const CheckoutForm = () => {
   return (
    <div id="smart-button-container" className="container text-center items-center justify-center">
      <div className="items-center justify-center py-4">
-       <h2>DZ Chicago 2021 Dues</h2>
+       <h2>DZ Chicago 2022 Dues</h2>
        <select id="item-options" onChange={handleChange}>
          {availableOptions.map((object, i) => <option key={i}>{object.title} - ${object.price}</option>)}
        </select>
