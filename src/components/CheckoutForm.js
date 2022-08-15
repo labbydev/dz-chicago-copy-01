@@ -6,20 +6,16 @@ const CheckoutForm = () => {
   const [paypalErrorMessage, setPaypalErrorMessage] = useState("");
   const [orderID, setOrderID] = useState(0);
   const [billingDetails, setBillingDetails] = useState("");
-  const orderDescription = 'DZ Chicago 2022 Dues';
+  const orderDescription = 'Membership  Tea Ticket';
 
   const availableOptions = [
     {
-      title: "Turtle",
-      price: 40.00
-    },
-    {
-      title: "Rose",
+      title: "Member Ticket",
       price: 70.00
     },
     {
-      title: "Diamond",
-      price: 150.00
+      title: "Diamond Member Ticket",
+      price: 49.00
     }
   ];
 
