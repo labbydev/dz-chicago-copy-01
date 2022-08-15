@@ -15,7 +15,7 @@ export default class Advanced extends React.Component {
                   <Component key={section_idx} {...this.props} section={section} site={this.props} />
                 )
             })}
-            {this.props.path === "/thank-you" && <CheckoutForm />}
+            {this.props.path === "/tea-payment" && <CheckoutForm />}
             </Layout>
         );
     }
