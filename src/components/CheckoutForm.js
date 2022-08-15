@@ -6,20 +6,16 @@ const CheckoutForm = () => {
   const [paypalErrorMessage, setPaypalErrorMessage] = useState("");
   const [orderID, setOrderID] = useState(0);
   const [billingDetails, setBillingDetails] = useState("");
-  const orderDescription = 'DZ Chicago 2022 Dues';
+  const orderDescription = 'Membership  Tea Ticket';
 
   const availableOptions = [
     {
-      title: "Turtle",
-      price: 40.00
-    },
-    {
-      title: "Rose",
+      title: "Member Ticket",
       price: 70.00
     },
     {
-      title: "Diamond",
-      price: 150.00
+      title: "Diamond Member Ticket",
+      price: 49.00
     }
   ];
 
@@ -74,7 +70,7 @@ const CheckoutForm = () => {
   return (
    <div id="smart-button-container" className="container text-center items-center justify-center">
      <div className="items-center justify-center py-4">
-       <h2>DZ Chicago 2022 Dues</h2>
+       <h2>Membership  Tea Ticket</h2>
        <select id="item-options" onChange={handleChange}>
          {availableOptions.map((object, i) => <option key={i}>{object.title} - ${object.price}</option>)}
        </select>
