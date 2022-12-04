@@ -1,6 +1,5 @@
 import React from 'react';
 import _ from 'lodash';
-import CheckoutForm from '../components/CheckoutForm';
 
 import components, {Layout} from '../components/index';
 
@@ -15,7 +14,6 @@ export default class Advanced extends React.Component {
                   <Component key={section_idx} {...this.props} section={section} site={this.props} />
                 )
             })}
-            {this.props.path === "/tea-payment" && <CheckoutForm />}
             </Layout>
         );
     }

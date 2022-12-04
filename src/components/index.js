@@ -6,6 +6,7 @@ import BlogPostAuthor from './BlogPostAuthor';
 import BlogPostCategories from './BlogPostCategories';
 import BlogPostFeedItem from './BlogPostFeedItem';
 import BlogPostTags from './BlogPostTags';
+import CheckoutForm from './CheckoutForm';
 import CtaSection from './CtaSection';
 import Feature from './Feature';
 import FeaturesSection from './FeaturesSection';
@@ -31,6 +32,7 @@ export {
     BlogPostCategories,
     BlogPostFeedItem,
     BlogPostTags,
+    CheckoutForm,
     CtaSection,
     Feature,
     FeaturesSection,
@@ -57,6 +59,7 @@ export default {
     BlogPostCategories,
     BlogPostFeedItem,
     BlogPostTags,
+    CheckoutForm,
     CtaSection,
     Feature,
     FeaturesSection,

@@ -1,25 +1,24 @@
 import { useState } from "react";
 import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
 
-const CheckoutForm = () => {
+function CheckoutForm(section) {
+
   const [succeeded, setSucceeded] = useState(false);
   const [paypalErrorMessage, setPaypalErrorMessage] = useState("");
   const [orderID, setOrderID] = useState(0);
   const [billingDetails, setBillingDetails] = useState("");
-  const orderDescription = 'Membership  Tea Ticket';
+  const orderDescription = section.section.description;
+  const options = Array.from(section.section.options);
 
-  const availableOptions = [
-    {
-      title: "Member Ticket",
-      price: 70.00
-    },
-    {
-      title: "Diamond Member Ticket",
-      price: 49.00
-    }
-  ];
+  let paymentOptions = [];
+  options.forEach((option) => {
+    paymentOptions.push({
+      title: option.key,
+      price: option.value
+    })
+  })
 
-  const [itemOptions, setItemOptions] = useState(availableOptions[0]);
+  const [itemOptions, setItemOptions] = useState(paymentOptions[0]);
 
   const createOrder = (data, actions) => {
 
@@ -60,19 +59,19 @@ const CheckoutForm = () => {
   };
 
   const onError = (data, actions) => {
-    setPaypalErrorMessage("Something went wrong with your payment")
+    setPaypalErrorMessage(section.section.errorMessage)
   };
 
   const handleChange = (event) => {
-    setItemOptions(availableOptions[event.target.selectedIndex]);
+    setItemOptions(paymentOptions[event.target.selectedIndex]);
   }
   
   return (
    <div id="smart-button-container" className="container text-center items-center justify-center">
      <div className="items-center justify-center py-4">
-       <h2>Membership  Tea Ticket</h2>
+       <h2>{section.section.description}</h2>
        <select id="item-options" onChange={handleChange}>
-         {availableOptions.map((object, i) => <option key={i}>{object.title} - ${object.price}</option>)}
+         {paymentOptions.map((object, i) => <option key={i}>{object.title} - ${object.price}</option>)}
        </select>
      </div>
      <PayPalScriptProvider options={{
@@ -95,7 +94,7 @@ const CheckoutForm = () => {
         <p className="text-red-600">{paypalErrorMessage}</p>
       )}
 
-      {succeeded && <p className="text-green-600">Thank you!</p>}
+      {succeeded && <p className="text-green-600">{section.section.successMessage}</p>}
    </div>
   );
 };
